@@ -14,7 +14,7 @@ const yargs = require('yargs');
 const fss = require('fs-extra');
 
 const pack = require('./template/package.json');
-//const babelrc = require('./template/babelrc');
+const babelrc = require('./template/babelrc');
 
 const store = memFs.create();
 const fs = editor.create(store);
@@ -245,7 +245,7 @@ class Main {
             copy('_.gitignore', '.gitignore');
             copy('_.stylelintrc', '.stylelintrc');
             // 写入 babelrc
-            //fs.writeJSON(destPath('.babelrc'), babelrc(this.props), null, '  ');
+            fs.writeJSON(destPath('.babelrc'), babelrc(this.props), null, '  ');
             // 复制 React 代码文件
             this.copyReactSource();
 
