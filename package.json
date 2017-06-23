@@ -9,7 +9,8 @@
   },
   "bin": {
     "re": "index.js",
-    "react": "index.js"
+    "react": "index.js",
+	"r": "index.js",
   },
   "author": "losexing",
   "license": "ISC",
