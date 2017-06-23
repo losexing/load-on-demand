@@ -14,7 +14,7 @@ const yargs = require('yargs');
 const fss = require('fs-extra');
 
 const pack = require('./template/package.json');
-const babelrc = require('./template/babelrc');
+//const babelrc = require('./template/babelrc');
 
 const store = memFs.create();
 const fs = editor.create(store);
@@ -105,7 +105,7 @@ class Main {
             }
         };
 
-        this.yargs = yargs.usage(`${welcome}\n\nUsage: re|react [path] [options]`)
+        this.yargs = yargs.usage(`${welcome}\n\nUsage: losexing [path] [options]`)
             .options(opt)
             .locale('en')
             .help('h');
@@ -179,55 +179,56 @@ class Main {
 
     copyReactSource() {
         copy('src/css');
-        const { cssm, redux, router,table } = this.props;
+        //const { cssm, redux, router,table } = this.props;
+        const { table } = this.props;
 
-        if (redux) {
-            copy('src/model/action.js');
-            copy('src/model/action-types.js');
-            copyTpl(this.props, 'src/model/reducer.js.ejs', 'src/model/reducer.js');
-        }
+        //if (redux) {
+        //    copy('src/model/action.js');
+        //    copy('src/model/action-types.js');
+        //    copyTpl(this.props, 'src/model/reducer.js.ejs', 'src/model/reducer.js');
+        //}
 
         //copyTpl(this.props, 'src/views/about.jsx.ejs', 'src/views/about.jsx');
         //copyTpl(this.props, 'src/views/user.jsx.ejs', 'src/views/user.jsx');
 
-        if (cssm) {
-            copy('src/views/about.scss');
-            copy('src/views/user.scss');
-        }
+        //if (cssm) {
+        //    copy('src/views/about.scss');
+        //    copy('src/views/user.scss');
+        //}
         if(table) {
             copy('src/components/table/table.html');
         }
 
-        if (router && redux) {
-            copy('src/app-router-redux.jsx', 'src/app.jsx');
-            copy('src/wrap-router-redux.jsx', 'src/wrap.jsx');
-        } else if (router) {
-            copy('src/app-router.jsx', 'src/app.jsx');
-            copy('src/wrap-router.jsx', 'src/wrap.jsx');
-        } else if (redux) {
-            copy('src/app-redux.jsx', 'src/app.jsx');
-            copy('src/wrap-redux.jsx', 'src/wrap.jsx');
-        } else {
-            copy('src/app.jsx');
-        }
+        //if (router && redux) {
+        //    copy('src/app-router-redux.jsx', 'src/app.jsx');
+        //    copy('src/wrap-router-redux.jsx', 'src/wrap.jsx');
+        //} else if (router) {
+        //    copy('src/app-router.jsx', 'src/app.jsx');
+        //    copy('src/wrap-router.jsx', 'src/wrap.jsx');
+        //} else if (redux) {
+        //    copy('src/app-redux.jsx', 'src/app.jsx');
+        //    copy('src/wrap-redux.jsx', 'src/wrap.jsx');
+        //} else {
+        //    copy('src/app.jsx');
+        //}
 
         // copy index.jsx
-        if (redux || router) {
-            copy('src/index-wrap.jsx', 'src/index.jsx');
-        } else {
-            copy('src/index.jsx');
-        }
+        //if (redux || router) {
+        //    copy('src/index-wrap.jsx', 'src/index.jsx');
+        //} else {
+        //    copy('src/index.jsx');
+        //}
     }
 
     copyTesting() {
-        if (this.props.testing) {
-            fss.copy(templatePath('./testing/dev'), destPath('dev'), (err) => {
-                if (err) return console.error(err);
-            });
-            fss.copy(templatePath('./testing/test'), destPath('test'), (err) => {
-                if (err) return console.error(err);
-            });
-        }
+        //if (this.props.testing) {
+        //    fss.copy(templatePath('./testing/dev'), destPath('dev'), (err) => {
+        //        if (err) return console.error(err);
+        //    });
+        //    fss.copy(templatePath('./testing/test'), destPath('test'), (err) => {
+        //        if (err) return console.error(err);
+        //    });
+        //}
     }
 
     writing() {
@@ -236,20 +237,20 @@ class Main {
         try {
             console.log('destPath:', destPath());
             // 复制静态文件
-            fss.copy(templatePath('./asset'), destPath(), (err) => {
-                if (err) return console.error(err);
-            });
+            //fss.copy(templatePath('./asset'), destPath(), (err) => {
+            //    if (err) return console.error(err);
+            //});
 
             // 写入 package.json
             fs.write(destPath('package.json'), pack.getPackageJSON(Object.assign({}, this.props, this.user)));
-            copy('_.gitignore', '.gitignore');
-            copy('_.stylelintrc', '.stylelintrc');
+            //copy('_.gitignore', '.gitignore');
+            //copy('_.stylelintrc', '.stylelintrc');
             // 写入 babelrc
-            fs.writeJSON(destPath('.babelrc'), babelrc(this.props), null, '  ');
+            //fs.writeJSON(destPath('.babelrc'), babelrc(this.props), null, '  ');
             // 复制 React 代码文件
             this.copyReactSource();
 
-            this.copyTesting();
+            //this.copyTesting();
 
             fs.commit(() => { });
 
